@@ -1,6 +1,7 @@
 # Synopsis
 * Install the [gnome-menus] (GMenu-3.0) and (optionally) Gtk-3.0 libraries.
 * Install this library into somewhere, where `awesomewm` can pick it up, e.g. into the `~/.config/awesome/gnome_menu/` directory.
+* Make sure that you have an XDG Menu file at `/etc/xdg/menus/applications.menu` or `~/.config/menus/applications.menu`.
 * Modify your `rc.lua` as follows.
 
 ```lua
@@ -17,16 +18,17 @@ mymainmenu = awful.menu({ items = {
 
 # Introduction
 
-`gnome_menu for awesomewm` is a lua library for the [awesome] window manager,
+`gnome_menu for awesomewm` is a Lua library for the [awesome] window manager,
 that enables parsing Freedesktop(XDG)-standard Menu files, to e.g. present your typical application menu.
 
 I know of several projects that aim to do the same:
-* awesome's built-in [menubar] module, which implements XDG Menu parsing in pure Lua.
+* awesome's built-in [menubar] module, which implements XDG .desktop file parsing in pure Lua.
 * [awesome-freedesktop], which internally uses `menubar`.
-* [xdg-menu-to-awesome-wm], which is a python program for statically generating a lua file with the menu.
+* [xdg-menu-to-awesome-wm], which is a Python program for statically generating a Lua file with the menu.
 
 Unfortunately, at the time of writing, all of them fell short of my needs.
-`menubar` seems to limit itself to showing only some predefined set of application categories/submenus,
+`menubar` doesn't actually parse XDG Menu files, it only looks for installed .desktop entries and
+partitions them into a predefined set of application categories/submenus,
 so a lot of stuff ends up simply missing, compared to `xdg-menu-to-awesome-wm`, but the latter requires
 one to manually regenerate the menu file every time a program is (un)installed, which is annoying.
 
@@ -56,12 +58,16 @@ like notification icons. Look around in the `icon_gtk.lua` for how, if you're in
 
 * This library doesn't honor the `OnlyShowIn`/`NotShowIn` Desktop Entry directives.
   I.e. you might see menu items, that only make sense in KDE, for example.
-  The proper behavior can be implemented, but I deem the effort not worth the result at this moment.
+  The proper behavior can be implemented, but I deem it not worth the effort at this moment.
 * The `gnome-menus` library has a bug with parsing of the `applications.menu` file, when it is a symlink to a differently named file.
   E.g. if `/etc/xdg/menus/applications.menu` is actually a symlink to a `kf5-applications.menu` file, then it will,
   in violation of the specification, ignore menu files in `/etc/xdg/menus/applications-merged` directory,
-  and look in the `kf5-applications-merged` directory instead.
+  and look in the `kf5-applications-merged` directory instead, which likely doesn't even exist.
   The workaround is to symlink the `applications-merged` directory to the expected name.
+* For the library to work there has to be an `applications.menu` XDG Menu file installed.
+  In practice, I've always had enough installed programs that depended on KDE/Gnome libraries,
+  which pulled in a menu file or two as a dependency, so it never was a problem for me.
+  If that turns out to be not the case for you, you can always take [one from KDE], for example.
 
 # License
 
@@ -76,3 +82,4 @@ You should have received a copy of the GNU General Public License along with thi
 [menubar]: https://awesomewm.org/doc/api/libraries/menubar.html
 [awesome-freedesktop]: https://github.com/lcpz/awesome-freedesktop
 [xdg-menu-to-awesome-wm]: https://github.com/albel727/xdg-menu-to-awesome-wm
+[one from KDE]: https://invent.kde.org/frameworks/kservice/-/raw/master/src/applications.menu
