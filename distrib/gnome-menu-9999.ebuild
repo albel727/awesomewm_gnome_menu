@@ -16,7 +16,7 @@ IUSE="+gtk3"
 
 RDEPEND="
 	x11-wm/awesome
-	gnome-base/gnome-menus:3
+	gnome-base/gnome-menus:3[introspection]
 	gtk3? ( x11-libs/gtk+:3 )
 "
 
