@@ -1,8 +1,8 @@
 # Synopsis
-* Install the [gnome-menus] (GMenu-3.0) and (optionally) Gtk-3.0 libraries.
-* Install this library into somewhere, where `awesomewm` can pick it up, e.g. into the `~/.config/awesome/gnome_menu/` directory.
-* Make sure that you have an XDG Menu file at `/etc/xdg/menus/applications.menu` or `~/.config/menus/applications.menu`.
-* Modify your `rc.lua` as follows.
+1. Install the [gnome-menus] (GMenu-3.0) and (optionally) Gtk-3.0 libraries.
+1. Install this library into somewhere, where `awesomewm` can pick it up, e.g. into the `~/.config/awesome/gnome_menu/` directory.
+1. Make sure that you have an XDG Menu file at `/etc/xdg/menus/applications.menu` or `~/.config/menus/applications.menu`.
+1. Modify your `rc.lua` as follows.
 
 ```lua
 -- Somewhere at the top:
