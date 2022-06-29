@@ -56,9 +56,10 @@ like notification icons. Look around in the `icon_gtk.lua` for how, if you're in
 
 # Known bugs and limitations
 
-* This library doesn't honor the `OnlyShowIn`/`NotShowIn` Desktop Entry directives.
+* `gnome-menus` honors `OnlyShowIn`/`NotShowIn` Desktop Entry directives on the basis of the `$XDG_CURRENT_DESKTOP`
+  environment variable, which is supposed to be a colon-separated list of desktop environments ("KDE", "Gnome", etc).
+  If it ends up unset or empty (which often happens for rare WM-s like Awesome), then no entry filtering is performed.
   I.e. you might see menu items, that only make sense in KDE, for example.
-  The proper behavior can be implemented, but I deem it not worth the effort at this moment.
 * The `gnome-menus` library has a bug with parsing of the `applications.menu` file, when it is a symlink to a differently named file.
   E.g. if `/etc/xdg/menus/applications.menu` is actually a symlink to a `kf5-applications.menu` file, then it will,
   in violation of the specification, ignore menu files in `/etc/xdg/menus/applications-merged` directory,
