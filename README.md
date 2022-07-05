@@ -34,8 +34,11 @@ one to manually regenerate the menu file every time a program is (un)installed, 
 
 I didn't have time to try and improve `menubar`, so I've decided to quickly whip up something,
 utilizing some tried and tested XDG Menu parsing library, which ended up being [gnome-menus].
-With this, everything is shown like I want it and on the fly.
-
+With this, everything is shown like I want it and on the fly. And I mean **really** on the fly!
+It's possible to configure awesome to **watch for changes**
+(i.e. anything that touches the relevant `.menu` and `.desktop` files, e.g. when you un/install applications)
+and automatically update the menu accordingly, without even needing to restart awesome
+(see `Advanced usage` below, if you're interested and confident with Lua).
 
 # Icon lookup and Gtk-3.0
 
@@ -69,6 +72,39 @@ like notification icons. Look around in the `icon_gtk.lua` for how, if you're in
   In practice, I've always had enough installed programs that depended on KDE/Gnome libraries,
   which pulled in a menu file or two as a dependency, so it never was a problem for me.
   If that turns out to be not the case for you, you can always take [one from KDE], for example.
+
+# Advanced usage
+
+#### Automatically updating menu
+(*Note: this functionality requires `INOFITY` support from your Linux kernel, which is very likely present, though*).
+
+The usage example from `Synopsis` is simple to integrate into the awesome config and sufficient for the most.
+It has just a minor drawback: whenever your applications change, you have to restart awesome in order to see
+the changes in your application menu. With a bit of effort though, this situation can be amended, by using
+`gnome_menu.watch_menu()` together with `gnome_menu.utils.replace_awful_menu_items()` helper
+in order to rebuild the menu from scratch, whenever a change occurs.
+
+```lua
+
+-- We're just going to create an empty menu. It will get populated below.
+mymainmenu = awful.menu()
+
+-- Create our application menu watcher.
+local myappmenu = gnome_menu.watch_menu()
+
+-- The watcher will run this function once at startup and then on every change.
+myappmenu:run_on_menu_change(function()
+    -- Clear mymainmenu and re-populate it
+    -- with the application menu + a few standard menu items.
+
+    gnome_menu.utils.replace_awful_menu_items(mymainmenu, {
+        myappmenu:get_parsed_menu(),
+        { "awesome", myawesomemenu, beautiful.awesome_icon },
+        { "open terminal", terminal },
+    })
+end)
+
+```
 
 # License
 
