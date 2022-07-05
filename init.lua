@@ -2,12 +2,15 @@
 local gmenu = require("gnome_menu.gmenu")
 local table_insert = table.insert
 local table_sort = table.sort
+local utils = require("gnome_menu.utils")
 
 local module = {
     -- Use Gio launcher by default, b/c it probably handles some special XDG entries better.
     cmd_resolver = require("gnome_menu.cmd_gio").app_info_to_cmd,
     -- Autodetect, if we can use Gtk to resolve icons, fall back to awesome's resolver instead.
     icon_resolver = require("gnome_menu.icon_autodetect").resolve_gicon,
+    -- Re-export gnome_menu.utils for quick user access.
+    utils = utils,
 }
 
 -- Converts an XDG menu entry into awful.menu item table.
@@ -24,19 +27,6 @@ function module.itemize_menu_entry(entry)
         cmd = app_cmd,
         icon = module.icon_resolver(app_icon),
     }
-end
-
--- Helper function for shallow-sorting an awful.menu items table.
-function module.sort_menu_items_by_name(items)
-    table_sort(items, function(a, b)
-        local a_t = type(a.cmd) == "table"
-        local b_t = type(b.cmd) == "table"
-        if a_t ~= b_t then
-            -- Sort submenus before normal entries.
-            return a_t
-        end
-        return a.text <= b.text
-    end)
 end
 
 -- Converts an XDG submenu into awful.menu item table.
@@ -77,7 +67,7 @@ function module.traverse_menu_directory(directory)
         end
     end
 
-    module.sort_menu_items_by_name(items)
+    utils.sort_menu_items_by_name(items)
 
     return {
         text = dir_name,
@@ -87,8 +77,9 @@ function module.traverse_menu_directory(directory)
 end
 
 function module.reload_menu(menu)
-    if not menu:load_sync() then
-        require("gears.debug").print_warning("Failed to find/load XDG Menu file: " .. tostring(menu.menu_path or menu.menu_basename))
+    if not utils.gmenu_load(menu) then
+        -- A dummy fallback menu, that doesn't crash Awesome, like nil would,
+        -- but makes it obvious to the user, that something went wrong.
         return { text = 'Error loading XDG Menu file' }
     end
     local menu_dir = menu:get_root_directory()
@@ -98,10 +89,7 @@ end
 
 -- Produces a single item for awful.menu from a given XDG menu file.
 function module.load_menu(menu_file, flags)
-    menu_file = menu_file or "applications.menu"
-    flags = flags or gmenu.TreeFlags.NONE
-    --flags = flags or gmenu.TreeFlags.SORT_DISPLAY_NAME
-    local menu = gmenu.Tree.new(menu_file, flags)
+    local menu = utils.gmenu_new(menu_file, flags)
     return module.reload_menu(menu)
 end
 
