@@ -27,7 +27,7 @@ I know of several projects that aim to do the same:
 * [xdg-menu-to-awesome-wm], which is a Python program for statically generating a Lua file with the menu.
 
 Unfortunately, at the time of writing, all of them fell short of my needs.
-`menubar` doesn't actually parse XDG Menu files, it only looks for installed .desktop entries and
+`menubar` doesn't actually parse XDG Menu files, it only looks for installed `.desktop` entries and
 partitions them into a predefined set of application categories/submenus,
 so a lot of stuff ends up simply missing, compared to `xdg-menu-to-awesome-wm`, but the latter requires
 one to manually regenerate the menu file every time a program is (un)installed, which is annoying.
