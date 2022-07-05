@@ -13,8 +13,8 @@ function module.build_gicon_resolver(icon_size, gtk_theme)
         if not icon then
             return nil
         end
-        local gtk_theme = gtk_theme or module.gtk_theme
-        local icon_info = gtk_theme:lookup_by_gicon(icon, icon_size or module.icon_size, 0)
+        local theme = gtk_theme or module.gtk_theme
+        local icon_info = theme:lookup_by_gicon(icon, icon_size or module.icon_size, 0)
         return icon_info and icon_info:get_filename()
     end
 end
@@ -34,8 +34,8 @@ function module.build_icon_resolver(icon_size, gtk_theme)
         if not icon then
             return nil
         end
-        local gtk_theme = gtk_theme or module.gtk_theme
-        local icon_info = gtk_theme:lookup_icon(icon, icon_size or module.icon_size, 0)
+        local theme = gtk_theme or module.gtk_theme
+        local icon_info = theme:lookup_icon(icon, icon_size or module.icon_size, 0)
         return icon_info and icon_info:get_filename()
     end
 end
@@ -49,8 +49,8 @@ end
 --          if not icon then
 --              return nil
 --          end
---          local gtk_theme = gtk_theme or module.gtk_theme
---          local icon_info = gtk_theme:lookup_by_gicon(icon, icon_size or module.icon_size, 0)
+--          local theme = gtk_theme or module.gtk_theme
+--          local icon_info = theme:lookup_by_gicon(icon, icon_size or module.icon_size, 0)
 --          return icon_info and icon_info:load_icon()
 --      end
 --  end

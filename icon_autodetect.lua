@@ -27,7 +27,9 @@ local function autodetector(...)
 
     local icon_resolver = icon_gtk and icon_gtk.build_gicon_resolver()
     if not icon_resolver then
-        require("gears.debug").print_warning("gnome_menu: Gtk-3.0 not found or failed. Falling back to awesomewm's native icon resolution.")
+        require("gears.debug").print_warning(
+            "gnome_menu: Gtk-3.0 not found or failed. Falling back to awesomewm's native icon resolution."
+        )
         icon_resolver = require("gnome_menu.icon_awesome").resolve_gicon
     end
 

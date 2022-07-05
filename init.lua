@@ -96,7 +96,7 @@ function module.reload_menu(menu)
     return module.traverse_menu_directory(menu_dir)
 end
 
--- Produces a single item for awful.menu from a given xdg menu file.
+-- Produces a single item for awful.menu from a given XDG menu file.
 function module.load_menu(menu_file, flags)
     menu_file = menu_file or "applications.menu"
     flags = flags or gmenu.TreeFlags.NONE
