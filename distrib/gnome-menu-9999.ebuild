@@ -25,6 +25,7 @@ DOCS=( README.md )
 src_install() {
 	insinto /usr/share/awesome/lib/gnome_menu
 	doins *.lua
+	doins -r visitor
 
 	einstalldocs
 }
