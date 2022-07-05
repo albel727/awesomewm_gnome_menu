@@ -93,4 +93,14 @@ function module.load_menu(menu_file, flags)
     return module.reload_menu(menu)
 end
 
+function module.watch_menu(menu_file, flags)
+    local watcher = require("gnome_menu.watcher")
+    local menu = utils.gmenu_new(menu_file, flags)
+    local ret = watcher.new({
+        raw_menu = menu,
+        menu_parser = module.reload_menu,
+    })
+    return ret
+end
+
 return module

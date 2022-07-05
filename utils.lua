@@ -4,6 +4,17 @@ local table_sort = table.sort
 
 local module = {}
 
+-- Helper function for replacing the menu items of an already constructed
+-- awful.menu widget with a given items table.
+function module.replace_awful_menu_items(awful_menu, items)
+    while awful_menu.items[1] do
+        awful_menu:delete(1)
+    end
+    for _, v in ipairs(items) do
+        awful_menu:add(v)
+    end
+end
+
 -- Helper function for shallow-sorting an awful.menu items table by name.
 function module.sort_menu_items_by_name(items)
     table_sort(items, function(a, b)
