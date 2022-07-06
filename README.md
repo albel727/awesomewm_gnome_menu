@@ -34,8 +34,8 @@ one to manually regenerate the menu file every time a program is (un)installed, 
 
 I didn't have time to try and improve `menubar`, so I've decided to quickly whip up something,
 utilizing some tried and tested XDG Menu parsing library, which ended up being [gnome-menus].
-With this, everything is shown like I want it and on the fly. And I mean **really** on the fly!
-It's possible to configure awesome to **watch for changes**
+With this, everything is shown like I want it and on the fly. And I mean _really_ on the fly!
+It's possible to configure awesome to _watch for changes_
 (i.e. anything that touches the relevant `.menu` and `.desktop` files, e.g. when you un/install applications)
 and automatically update the menu accordingly, without even needing to restart awesome
 (see `Advanced usage` below, if you're interested and confident with Lua).
@@ -76,7 +76,7 @@ like notification icons. Look around in the `icon_gtk.lua` for how, if you're in
 # Advanced usage
 
 #### Automatically updating menu
-(*Note: this functionality requires `INOFITY` support from your Linux kernel, which is very likely present, though*).
+(_Note: this functionality requires `INOTIFY` support from your Linux kernel, which is very likely present, though_).
 
 The usage example from `Synopsis` is simple to integrate into the awesome config and sufficient for the most.
 It has just a minor drawback: whenever your applications change, you have to restart awesome in order to see
