@@ -3,15 +3,20 @@
 
 EAPI=7
 
-inherit git-r3
-
 DESCRIPTION="Yet another Freedesktop Menu parsing library for x11-wm/awesome"
 HOMEPAGE="https://github.com/albel727/awesomewm_gnome_menu"
-EGIT_REPO_URI="https://github.com/albel727/awesomewm_gnome_menu.git"
+
+if [[ ${PV} == "9999" ]] ; then
+	EGIT_REPO_URI="https://github.com/albel727/awesomewm_gnome_menu.git"
+	inherit git-r3
+else
+	SRC_URI="https://github.com/albel727/awesomewm_gnome_menu/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
+	KEYWORDS="amd64 x86 ~alpha ~amd64-linux ~arm ~ia64 ~ppc ~ppc64 ~ppc-macos ~riscv ~sparc ~x86-linux ~x86-solaris"
+	S="${WORKDIR}/awesomewm_gnome_menu-${PV}"
+fi
 
 LICENSE="GPL-3+"
 SLOT="0"
-KEYWORDS="amd64 x86"
 IUSE="+gtk3"
 
 RDEPEND="
