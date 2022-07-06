@@ -3,7 +3,7 @@
 
 EAPI=7
 
-DESCRIPTION="Yet another Freedesktop Menu parsing library for x11-wm/awesome"
+DESCRIPTION="Yet another Freedesktop Menu library for x11-wm/awesome"
 HOMEPAGE="https://github.com/albel727/awesomewm_gnome_menu"
 
 if [[ ${PV} == "9999" ]] ; then
